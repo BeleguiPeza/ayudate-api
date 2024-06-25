@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -25,7 +26,7 @@ export class AuthService {
     return list;
   }
 
-  async findById(id: number): Promise<Auth> {
+  async getById(id: number): Promise<Auth> {
     const product = await this.authRepository.findOneBy({ id: id });
     if (!product) {
       throw new NotFoundException({ message: 'no existe' });
@@ -34,12 +35,16 @@ export class AuthService {
   }
 
   async signIn(dto: AuthDto): Promise<{ access_token: string }> {
-    const user = await this.authRepository.findOneBy({ email: dto.email });
+    const email = dto.email;
+    const user = await this.authRepository.findOneBy({ email: email });
+    if (!user) throw new NotFoundException({ message: 'No existe el usuario' });
     if (user?.password !== dto.password) {
-      throw new UnauthorizedException();
+      throw new NotFoundException({ message: 'Contraseña Incorrecta' });
     }
     const payload = { sub: user.id, username: user.name };
+    delete user.password;
     return {
+      ...user,
       access_token: await this.jwtService.signAsync(payload),
     };
   }

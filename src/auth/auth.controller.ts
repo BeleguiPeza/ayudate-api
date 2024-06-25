@@ -20,11 +20,11 @@ export class AuthController {
 
   @Get()
   async getAll() {
-    return await this.authService.findAll();
+    return await this.authService.getAll();
   }
 
   @Get(':id')
   async getOne(@Param('id', ParseIntPipe) id: number) {
-    return await this.authService.findById(id);
+    return await this.authService.getById(id);
   }
 }

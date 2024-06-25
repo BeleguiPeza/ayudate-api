@@ -45,7 +45,7 @@ export class ProductService {
     const product = await this.findById(id);
     dto.name ? (product.name = dto.name) : (product.name = product.name);
     dto.price ? (product.price = dto.price) : (product.price = product.price);
-    dto.image ? (product.image = dto.image) : (product.image = product.image);
+    dto.qty ? (product.qty = dto.qty) : (product.qty = product.qty);
     await this.productRepository.save(product);
     return { message: `Product ${product.name} edited` };
   }
