@@ -32,6 +32,16 @@
 $ npm install
 ```
 
+## Add file .env nivel package.json
+
+```bash
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=ayudate
+DB_USER=root
+DB_PASSWORD=
+```
+
 ## Running the app
 
 ```bash
